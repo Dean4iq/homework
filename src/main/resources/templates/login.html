@@ -1,0 +1,39 @@
+<META http-equiv="Content-Type" content="text/html;charset=UTF-8">
+
+<html xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
+
+<head>
+    <title th:text="#{label.pages.home.title}">Title</title>
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="css/signin.css"/>
+</head>
+
+<body class="text-center" onload='document.loginForm.username.focus();'>
+<div th:if="${param.message != null}" class="alert alert-info" th:text="${param.message[0]}">message</div>
+
+<div th:if="${param.error != null}" class="alert alert-danger" th:text="${session[SPRING_SECURITY_LAST_EXCEPTION]}">
+    error
+</div>
+
+<div class="form-signin">
+    <div>
+        <a href="?lang=en"><img src="icon/us.svg" height="30px"/> </a> |
+        <a href="?lang=uk"><img src="icon/ua.svg" height="30px"/> </a>
+    </div>
+
+    <form name='loginForm' action="/j_login_secured_check" method='POST' onsubmit="return validate();" autocomplete="off">
+        <h1 class="h3 mb-3 font-weight-normal" th:text="#{label.form.loginTitle}"></h1>
+
+        <label for="inputLogin" class="sr-only" th:text="#{label.form.loginLogin}"></label>
+        <input type="text" id="inputLogin" name="j_userName" class="form-control" required value="" th:placeholder="#{label.form.loginLogin}">
+        <label for="inputPassword" class="sr-only" th:text="#{label.form.loginPass}"></label>
+        <input type="password" name="j_userPassword" id="inputPassword" class="form-control" required value="" th:placeholder="#{label.form.loginPass}">
+
+        <input name="submit" class="btn btn-lg btn-primary btn-block" type="submit" th:value="#{label.form.submit}"/>
+        <a href="/register"><span th:text="#{label.form.loginSignUp}"/></a>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+    </form>
+</div>
+</body>
+
+</html>
