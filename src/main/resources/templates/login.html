@@ -3,7 +3,7 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
 
 <head>
-    <title th:text="#{label.pages.home.title}">Title</title>
+    <title th:text="#{label.pages.login.title}"></title>
     <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
     <link type="text/css" rel="stylesheet" href="css/signin.css"/>
 </head>
@@ -17,8 +17,8 @@
 
 <div class="form-signin">
     <div>
-        <a href="?lang=en"><img src="icon/us.svg" height="30px"/> </a> |
-        <a href="?lang=uk"><img src="icon/ua.svg" height="30px"/> </a>
+        <a href="?lang=en"><img src="icon/us.svg" height="30px"/></a>
+        <a href="?lang=uk"><img src="icon/ua.svg" height="30px"/></a>
     </div>
 
     <form name='loginForm' action="/j_login_secured_check" method='POST' onsubmit="return validate();" autocomplete="off">

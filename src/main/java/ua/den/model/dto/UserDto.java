@@ -1,26 +1,40 @@
-package ua.den.model.entity;
+package ua.den.model.dto;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.io.Serializable;
+import ua.den.model.annotations.*;
 
-@Entity
-@Table
-public class User implements Serializable {
-    @Id
-    @Column
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+@PasswordMatches
+public class UserDto {
+    @NotNull
+    @NotEmpty
+    @ValidLogin
     private String login;
 
+    @NotNull
+    @NotEmpty
+    @ValidPassword
     private String password;
+
+    @NotNull
+    @NotEmpty
+    @ValidEmail
     private String email;
+
+    @NotNull
+    @NotEmpty
+    @ValidName
     private String name;
 
-    @Column(name = "lastname")
+    @NotNull
+    @NotEmpty
+    @ValidLastName
     private String lastName;
-    private String role;
-    private boolean enabled;
+
+    @NotNull
+    @NotEmpty
+    private String repeatedPassword;
 
     public String getLogin() {
         return login;
@@ -62,20 +76,12 @@ public class User implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getRole() {
-        return role;
+    public String getRepeatedPassword() {
+        return repeatedPassword;
     }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    public void setRepeatedPassword(String repeatedPassword) {
+        this.repeatedPassword = repeatedPassword;
     }
 
     @Override
@@ -83,15 +89,14 @@ public class User implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        User user = (User) o;
+        UserDto userDto = (UserDto) o;
 
-        if (enabled != user.enabled) return false;
-        if (!login.equals(user.login)) return false;
-        if (!password.equals(user.password)) return false;
-        if (!email.equals(user.email)) return false;
-        if (!name.equals(user.name)) return false;
-        if (!lastName.equals(user.lastName)) return false;
-        return role.equals(user.role);
+        if (!login.equals(userDto.login)) return false;
+        if (!password.equals(userDto.password)) return false;
+        if (!email.equals(userDto.email)) return false;
+        if (!name.equals(userDto.name)) return false;
+        if (!lastName.equals(userDto.lastName)) return false;
+        return repeatedPassword.equals(userDto.repeatedPassword);
 
     }
 
@@ -102,8 +107,7 @@ public class User implements Serializable {
         result = 31 * result + email.hashCode();
         result = 31 * result + name.hashCode();
         result = 31 * result + lastName.hashCode();
-        result = 31 * result + role.hashCode();
-        result = 31 * result + (enabled ? 1 : 0);
+        result = 31 * result + repeatedPassword.hashCode();
         return result;
     }
 
@@ -115,8 +119,7 @@ public class User implements Serializable {
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", role='" + role + '\'' +
-                ", enabled=" + enabled +
+                ", repeatedPassword='" + repeatedPassword + '\'' +
                 '}';
     }
 }

@@ -7,4 +7,5 @@ import ua.den.model.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
     User findByLogin(String login);
+    User findByEmail(String email);
 }
