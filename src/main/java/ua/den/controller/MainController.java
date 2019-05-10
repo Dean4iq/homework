@@ -3,8 +3,6 @@ package ua.den.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,7 +53,7 @@ public class MainController {
         if (result.hasErrors()) {
             return new ModelAndView("registration", "userDto", userDto);
         } else {
-            return new ModelAndView("successRegister", "userDto", userDto);
+            return new ModelAndView("redirect:/login?succRegistration", "userDto", userDto);
         }
     }
 

@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 public class EmailValidator implements ConstraintValidator<ValidEmail, String> {
     private Pattern pattern;
     private Matcher matcher;
-    private static final String NAME_PATTERN = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
+    private static final String NAME_PATTERN = "[A-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[A-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
 
     @Override
     public void initialize(ValidEmail constraintAnnotation) {

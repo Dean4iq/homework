@@ -9,29 +9,34 @@
 </head>
 
 <body class="text-center" onload='document.loginForm.username.focus();'>
-<div th:if="${param.message != null}" class="alert alert-info" th:text="${param.message[0]}">message</div>
-
-<div th:if="${param.error != null}" class="alert alert-danger" th:text="${session[SPRING_SECURITY_LAST_EXCEPTION]}">
-    error
-</div>
-
 <div class="form-signin">
+    <div th:if="${param.message != null}" class="alert alert-info" th:text="${param.message[0]}">message</div>
+
+    <div th:if="${param.error != null}" class="alert alert-danger" th:text="${session[SPRING_SECURITY_LAST_EXCEPTION]}">
+        error
+    </div>
+    <div th:if="${param.succRegistration != null}" th:text="#{message.registration.success}" class="alert alert-success" role="alert">
+        Registered
+    </div>
     <div>
         <a href="?lang=en"><img src="icon/us.svg" height="30px"/></a>
         <a href="?lang=uk"><img src="icon/ua.svg" height="30px"/></a>
     </div>
 
-    <form name='loginForm' action="/j_login_secured_check" method='POST' onsubmit="return validate();" autocomplete="off">
+    <form name='loginForm' action="/j_login_secured_check" method='POST' onsubmit="return validate();"
+          autocomplete="off">
         <h1 class="h3 mb-3 font-weight-normal" th:text="#{label.form.loginTitle}"></h1>
 
         <label for="inputLogin" class="sr-only" th:text="#{label.form.loginLogin}"></label>
-        <input type="text" id="inputLogin" name="j_userName" class="form-control" required value="" th:placeholder="#{label.form.loginLogin}">
+        <input type="text" id="inputLogin" name="j_userName" class="form-control" required value=""
+               th:placeholder="#{label.form.loginLogin}">
         <label for="inputPassword" class="sr-only" th:text="#{label.form.loginPass}"></label>
-        <input type="password" name="j_userPassword" id="inputPassword" class="form-control" required value="" th:placeholder="#{label.form.loginPass}">
+        <input type="password" name="j_userPassword" id="inputPassword" class="form-control" required value=""
+               th:placeholder="#{label.form.loginPass}">
 
         <input name="submit" class="btn btn-lg btn-primary btn-block" type="submit" th:value="#{label.form.submit}"/>
         <a href="/register"><span th:text="#{label.form.loginSignUp}"/></a>
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     </form>
 </div>
 </body>
