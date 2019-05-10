@@ -53,17 +53,6 @@ public class MainController {
             result.rejectValue("email", "message.regError");
         }
         if (result.hasErrors()) {
-            for (Object object : result.getAllErrors()) {
-                if (object instanceof ObjectError && !(object instanceof FieldError)) {
-                    ObjectError objectError = (ObjectError) object;
-
-                    result.rejectValue("matchingPassword", objectError.getCode(), objectError.getDefaultMessage());
-                    System.out.println(objectError.getClass().getName());
-                    System.out.println(objectError.getDefaultMessage());
-                    System.out.println(objectError.getCode());
-                }
-            }
-
             return new ModelAndView("registration", "userDto", userDto);
         } else {
             return new ModelAndView("successRegister", "userDto", userDto);

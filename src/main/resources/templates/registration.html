@@ -21,46 +21,40 @@
                     <label for="name" th:text="#{label.form.name}"></label>
                     <input path="name" type="text" id="name" class="form-control" name="name" placeholder value required>
                     <div class="invalid-feedback" th:text="#{label.form.emptyField}"></div>
-                    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</span>
+                    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="alert alert-danger" role="alert"></div>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="lastName" th:text="#{label.form.lastName}"></label>
                     <input type="text" class="form-control" id="lastName" name="lastName" placeholder value required>
                     <div class="invalid-feedback" th:text="#{label.form.emptyField}"></div>
-                    <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last Name Error</span>
+                    <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="alert alert-danger" role="alert"></div>
                 </div>
             </div>
             <div class="mb-3">
                 <label for="email">Email</label>
                 <input type="text" class="form-control" id="email" name="email" placeholder value required>
                 <div class="invalid-feedback" th:text="#{label.form.emptyField}"></div>
-                <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</span>
+                <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="alert alert-danger" role="alert"></div>
             </div>
             <div class="mb-3">
                 <label for="login">Login</label>
                 <input type="text" class="form-control" id="login" name="login" placeholder value required>
                 <div class="invalid-feedback" th:text="#{label.form.emptyField}"></div>
-                <span th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Login Error</span>
+                <div th:if="${#fields.hasErrors('login')}" th:errors="*{login}" class="alert alert-danger" role="alert"></div>
             </div>
             <div class="mb-3">
                 <label for="pass" th:text="#{label.form.loginPass}"></label>
                 <input type="password" class="form-control" id="pass" name="password" placeholder value required>
                 <div class="invalid-feedback" th:text="#{label.form.emptyField}"></div>
-                <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</span>
+                <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="alert alert-danger" role="alert"></div>
             </div>
 
             <div class="mb-3">
                 <label for="repeat-pass" th:text="#{label.form.repeatPass}"></label>
                 <input type="password" class="form-control" id="repeat-pass" name="repeatedPassword" placeholder value required>
                 <div class="invalid-feedback" th:text="#{label.form.emptyField}"></div>
-                <span th:if="${#fields.hasErrors('matchingPassword')}" th:errors="*{matchingPassword}">Match Error</span>
+                <div th:if="${#fields.hasErrors('global')}" th:errors="*{global}" class="alert alert-danger" role="alert"></div>
             </div>
-            <ul>
-                <li th:each="e : ${#fields.detailedErrors()}" th:class="${e.global}? globalerr : fielderr">
-                    <span th:text="${e.global}? '*' : ${e.fieldName}">The field name</span> |
-                    <span th:text="${e.message}">The error message</span>
-                </li>
-            </ul>
             <button class="btn btn-primary btn-lg btn-block" type="submit" name="register"
                     th:text="#{label.form.submit}"></button>
         </form>
