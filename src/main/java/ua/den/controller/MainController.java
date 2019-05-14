@@ -20,6 +20,11 @@ public class MainController {
     @Autowired
     private UserService userService;
 
+    @RequestMapping("/")
+    public String getRedirectToDefault(){
+        return "redirect:/home";
+    }
+
     @RequestMapping("/login")
     public String getLoginPage(Principal principal) {
         return (principal == null) ? "login.html" : "redirect:/home";

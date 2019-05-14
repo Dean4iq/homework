@@ -45,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                 .antMatchers(("/register*")).permitAll()
                 .antMatchers("/user/**").hasRole("USER")
                 .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/home*").authenticated()
                 .antMatchers("/**").permitAll();
 
         http.formLogin()
