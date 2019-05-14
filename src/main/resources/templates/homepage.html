@@ -2,8 +2,10 @@
 
 <head>
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
     <title th:text="#{page.text.home.head}"></title>
 </head>
 <body>
@@ -29,8 +31,9 @@
                         <span sec:authentication="name"></span>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="@{/user/settings}">User settings</a>
+                        <div class="dropdown-divider"></div>
                         <a class="dropdown-item" th:href="@{/logout}" th:text="#{label.pages.logout}"></a>
-                        <a class="dropdown-item" href="#">User settings</a>
                     </div>
                 </li>
             </ul>

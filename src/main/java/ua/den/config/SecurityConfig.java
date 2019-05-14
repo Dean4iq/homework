@@ -64,6 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                 .permitAll()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login")
+                .deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true);
     }
 
