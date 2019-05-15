@@ -27,12 +27,12 @@
         </ul>
         <div class="form-inline my-2 my-md-0">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item dropdown" style="box-sizing: border-box">
+                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
                         <span sec:authentication="name"></span>
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="left:auto; right:0;">
                         <a class="dropdown-item" href="/user/settings" sec:authorize="hasRole('USER')" th:text="#{menu.link.userSettingsPage}"></a>
                         <div sec:authorize="hasRole('USER')" class="dropdown-divider"></div>
                         <a class="dropdown-item" th:href="@{/logout}" th:text="#{menu.link.logout}"></a>
