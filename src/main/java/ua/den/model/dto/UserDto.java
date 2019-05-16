@@ -34,6 +34,11 @@ public class UserDto {
 
     @NotNull
     @NotEmpty
+    @ValidPatronymicName
+    private String patronymicName;
+
+    @NotNull
+    @NotEmpty
     private String repeatedPassword;
 
     public String getLogin() {
@@ -84,6 +89,14 @@ public class UserDto {
         this.repeatedPassword = repeatedPassword;
     }
 
+    public String getPatronymicName() {
+        return patronymicName;
+    }
+
+    public void setPatronymicName(String patronymicName) {
+        this.patronymicName = patronymicName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -96,6 +109,7 @@ public class UserDto {
         if (!email.equals(userDto.email)) return false;
         if (!name.equals(userDto.name)) return false;
         if (!lastName.equals(userDto.lastName)) return false;
+        if (!patronymicName.equals(userDto.patronymicName)) return false;
         return repeatedPassword.equals(userDto.repeatedPassword);
 
     }
@@ -107,6 +121,7 @@ public class UserDto {
         result = 31 * result + email.hashCode();
         result = 31 * result + name.hashCode();
         result = 31 * result + lastName.hashCode();
+        result = 31 * result + patronymicName.hashCode();
         result = 31 * result + repeatedPassword.hashCode();
         return result;
     }
@@ -119,6 +134,7 @@ public class UserDto {
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", patronymicName='" + patronymicName + '\'' +
                 ", repeatedPassword='" + repeatedPassword + '\'' +
                 '}';
     }

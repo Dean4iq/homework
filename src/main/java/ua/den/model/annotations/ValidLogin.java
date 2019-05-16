@@ -16,7 +16,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint(validatedBy = LoginValidator.class)
 @Documented
 public @interface ValidLogin {
-    String message() default "Invalid login";
+    String message() default "{field.error.login}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

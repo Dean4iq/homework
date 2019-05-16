@@ -1,4 +1,4 @@
-<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
@@ -9,41 +9,7 @@
     <title th:text="#{page.text.home.head}"></title>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/home" th:text="#{menu.link.sitename}">WEB Site</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/home" th:text="#{menu.link.homepage}"><span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="#" th:text="#{menu.link.actionPage}"></a>
-            </li>
-        </ul>
-        <div class="form-inline my-2 my-md-0">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item dropdown" style="box-sizing: border-box">
-                    <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">
-                        <span sec:authentication="name"></span>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="left:auto; right:0;">
-                        <a class="dropdown-item" href="/user/settings" sec:authorize="hasRole('USER')" th:text="#{menu.link.userSettingsPage}"></a>
-                        <div sec:authorize="hasRole('USER')" class="dropdown-divider"></div>
-                        <a class="dropdown-item" th:href="@{/logout}" th:text="#{menu.link.logout}"></a>
-                    </div>
-                </li>
-            </ul>
-            <a href="?lang=en"><img src="/icon/us.svg" height="20px"/></a>
-            <a href="?lang=uk" style="margin-left: 10px;"><img src="/icon/ua.svg" height="20px"/></a>
-        </div>
-    </div>
-</nav>
+<div th:insert="parts/menuBar.html :: navbar"></div>
 
 <div class="container">
     <h1 th:text="#{page.text.home.body}">home</h1>

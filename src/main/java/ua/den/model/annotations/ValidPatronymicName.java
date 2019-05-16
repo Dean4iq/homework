@@ -1,6 +1,6 @@
 package ua.den.model.annotations;
 
-import ua.den.model.annotations.validators.PasswordValidator;
+import ua.den.model.annotations.validators.PatronymicNameValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -13,10 +13,10 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Target({TYPE, FIELD, ANNOTATION_TYPE})
 @Retention(RUNTIME)
-@Constraint(validatedBy = PasswordValidator.class)
+@Constraint(validatedBy = PatronymicNameValidator.class)
 @Documented
-public @interface ValidPassword {
-    String message() default "{field.error.password}";
+public @interface ValidPatronymicName {
+    String message() default "{field.error.patronymicName}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

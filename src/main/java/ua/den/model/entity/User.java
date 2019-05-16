@@ -19,6 +19,9 @@ public class User implements Serializable {
 
     @Column(name = "lastname")
     private String lastName;
+
+    @Column(name = "patronymic_name")
+    private String patronymicName;
     private String role;
     private boolean enabled;
 
@@ -62,6 +65,14 @@ public class User implements Serializable {
         this.lastName = lastName;
     }
 
+    public String getPatronymicName() {
+        return patronymicName;
+    }
+
+    public void setPatronymicName(String patronymicName) {
+        this.patronymicName = patronymicName;
+    }
+
     public String getRole() {
         return role;
     }
@@ -91,6 +102,7 @@ public class User implements Serializable {
         if (!email.equals(user.email)) return false;
         if (!name.equals(user.name)) return false;
         if (!lastName.equals(user.lastName)) return false;
+        if (!patronymicName.equals(user.patronymicName)) return false;
         return role.equals(user.role);
 
     }
@@ -102,6 +114,7 @@ public class User implements Serializable {
         result = 31 * result + email.hashCode();
         result = 31 * result + name.hashCode();
         result = 31 * result + lastName.hashCode();
+        result = 31 * result + patronymicName.hashCode();
         result = 31 * result + role.hashCode();
         result = 31 * result + (enabled ? 1 : 0);
         return result;
@@ -109,12 +122,13 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "UserDto{" +
+        return "User{" +
                 "login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", patronymicName='" + patronymicName + '\'' +
                 ", role='" + role + '\'' +
                 ", enabled=" + enabled +
                 '}';

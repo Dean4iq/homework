@@ -16,7 +16,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint(validatedBy = LastNameValidator.class)
 @Documented
 public @interface ValidLastName {
-    String message() default "Invalid last name";
+    String message() default "{field.error.lastName}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
