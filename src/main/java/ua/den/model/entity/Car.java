@@ -16,6 +16,9 @@ public class Car {
     private Integer releaseYear;
     private Integer mileage;
 
+    public Car() {
+    }
+
     private Car(Builder builder) {
         this.id = builder.id;
         this.model = builder.model;

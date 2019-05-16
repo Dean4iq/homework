@@ -25,6 +25,11 @@ public class UserController {
 
     @RequestMapping("search_process")
     public ModelAndView processSearch(@ModelAttribute("search_details") SearchParam searchParam) {
+        System.out.println(searchParam);
         return new ModelAndView("redirect:/user/search");
+    }
+
+    private void preparePredefinedFields(ModelAndView modelAndView) {
+
     }
 }
