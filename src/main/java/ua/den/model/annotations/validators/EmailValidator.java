@@ -18,10 +18,10 @@ public class EmailValidator implements ConstraintValidator<ValidEmail, String> {
 
     @Override
     public boolean isValid(String email, ConstraintValidatorContext constraintValidatorContext) {
-        return validateLogin(email);
+        return validateEmail(email);
     }
 
-    private boolean validateLogin(String email) {
+    private boolean validateEmail(String email) {
         pattern = Pattern.compile(NAME_PATTERN);
         matcher = pattern.matcher(email);
         return matcher.matches();

@@ -18,10 +18,10 @@ public class NameValidator implements ConstraintValidator<ValidName, String> {
 
     @Override
     public boolean isValid(String name, ConstraintValidatorContext constraintValidatorContext) {
-        return validateLogin(name);
+        return validateName(name);
     }
 
-    private boolean validateLogin(String name) {
+    private boolean validateName(String name) {
         pattern = Pattern.compile(NAME_PATTERN);
         matcher = pattern.matcher(name);
         return matcher.matches();

@@ -25,33 +25,31 @@
                 <div class="col-md-6 mb-3">
                     <label for="model">Model</label>
                     <input type="text" class="form-control" id="model" name="model" placeholder value>
-                    <div class="invalid-feedback" th:text="#{label.form.emptyField}"></div>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="serialNumber">serialNumber</label>
                     <input type="text" class="form-control" id="serialNumber" name="serialNumber" placeholder value>
-                    <div class="invalid-feedback" th:text="#{label.form.emptyField}"></div>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="enginePower">enginePower</label>
                     <input type="text" class="form-control" id="enginePower" name="enginePower" placeholder value>
-                    <div class="invalid-feedback" th:text="#{label.form.emptyField}"></div>
+                    <div th:if="${#fields.hasErrors('enginePower')}" th:errors="*{enginePower}" class="alert alert-danger" role="alert"></div>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="fuelTankCapacity">fuelTankCapacity</label>
                     <input type="text" class="form-control" id="fuelTankCapacity" name="fuelTankCapacity" placeholder
                            value>
-                    <div class="invalid-feedback" th:text="#{label.form.emptyField}"></div>
+                    <div th:if="${#fields.hasErrors('fuelTankCapacity')}" th:errors="*{fuelTankCapacity}" class="alert alert-danger" role="alert"></div>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="releaseYear">releaseYear</label>
                     <input type="text" class="form-control" id="releaseYear" name="releaseYear" placeholder value>
-                    <div class="invalid-feedback" th:text="#{label.form.emptyField}"></div>
+                    <div th:if="${#fields.hasErrors('releaseYear')}" th:errors="*{releaseYear}" class="alert alert-danger" role="alert"></div>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="mileage">mileage</label>
                     <input type="text" class="form-control" id="mileage" name="mileage" placeholder value>
-                    <div class="invalid-feedback" th:text="#{label.form.emptyField}"></div>
+                    <div th:if="${#fields.hasErrors('mileage')}" th:errors="*{mileage}" class="alert alert-danger" role="alert"></div>
                 </div>
             </div>
             <input type="submit" value="Submit"/>

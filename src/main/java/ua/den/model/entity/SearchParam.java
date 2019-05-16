@@ -1,13 +1,26 @@
 package ua.den.model.entity;
 
+import ua.den.model.annotations.ValidEnginePower;
+import ua.den.model.annotations.ValidFuelTankCapacity;
+import ua.den.model.annotations.ValidMileage;
+import ua.den.model.annotations.ValidReleaseYear;
+
 import java.util.Objects;
 
 public class SearchParam {
     private String model;
     private String serialNumber;
+
+    @ValidEnginePower
     private Integer enginePower;
+
+    @ValidFuelTankCapacity
     private Integer fuelTankCapacity;
+
+    @ValidReleaseYear
     private Integer releaseYear;
+
+    @ValidMileage
     private Integer mileage;
 
     public SearchParam() {

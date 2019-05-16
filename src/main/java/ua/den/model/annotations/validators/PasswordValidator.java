@@ -18,10 +18,10 @@ public class PasswordValidator implements ConstraintValidator<ValidPassword, Str
 
     @Override
     public boolean isValid(String password, ConstraintValidatorContext constraintValidatorContext) {
-        return validateLogin(password);
+        return validatePassword(password);
     }
 
-    private boolean validateLogin(String password) {
+    private boolean validatePassword(String password) {
         pattern = Pattern.compile(NAME_PATTERN);
         matcher = pattern.matcher(password);
         return matcher.matches();

@@ -18,10 +18,10 @@ public class LastNameValidator implements ConstraintValidator<ValidLastName, Str
 
     @Override
     public boolean isValid(String lastName, ConstraintValidatorContext constraintValidatorContext) {
-        return validateLogin(lastName);
+        return validateLastName(lastName);
     }
 
-    private boolean validateLogin(String lastName) {
+    private boolean validateLastName(String lastName) {
         pattern = Pattern.compile(NAME_PATTERN);
         matcher = pattern.matcher(lastName);
         return matcher.matches();

@@ -18,10 +18,10 @@ public class PatronymicNameValidator  implements ConstraintValidator<ValidPatron
 
     @Override
     public boolean isValid(String login, ConstraintValidatorContext constraintValidatorContext) {
-        return validateLogin(login);
+        return validatePatronymicName(login);
     }
 
-    private boolean validateLogin(String login) {
+    private boolean validatePatronymicName(String login) {
         pattern = Pattern.compile(PATRONYMIC_NAME_PATTERN);
         matcher = pattern.matcher(login);
         return matcher.matches();
