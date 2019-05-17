@@ -6,9 +6,98 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
 
-    <title th:text="#{page.text.home.head}"></title>
+    <title th:text="#{page.text.settings.title}"></title>
 </head>
 <body>
 <div th:insert="parts/menuBar.html :: navbar"></div>
+
+<div class="alert alert-success" th:if="${successProcess != null && successProcess}" th:text="#{message.successProcess}"></div>
+<div class="container" style="margin:20px 100px 0 100px;">
+    <form class="needs-validation" th:object="${nonSensitiveData}" method="post" action="/user/change_non_sensitive_data"
+          enctype="utf8">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="lastName" th:text="#{label.form.lastName}"></label>
+                <input type="text" class="form-control" id="lastName" name="lastName" placeholder value required
+                       th:value="${nonSensitiveData.lastName}">
+                <div class="invalid-feedback" th:text="#{label.form.emptyField}"></div>
+                <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="alert alert-danger"
+                     role="alert"></div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="name" th:text="#{label.form.name}"></label>
+                <input path="name" type="text" id="name" class="form-control" name="name" placeholder value required
+                       th:value="${nonSensitiveData.name}">
+                <div class="invalid-feedback" th:text="#{label.form.emptyField}"></div>
+                <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="alert alert-danger"
+                     role="alert"></div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="patronymicName" th:text="#{label.form.patronymicName}"></label>
+                <input type="text" class="form-control" id="patronymicName" name="patronymicName" placeholder value
+                       required th:value="${nonSensitiveData.patronymicName}">
+                <div class="invalid-feedback" th:text="#{label.form.emptyField}"></div>
+                <div th:if="${#fields.hasErrors('patronymicName')}" th:errors="*{patronymicName}"
+                     class="alert alert-danger" role="alert"></div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="email">Email</label>
+            <input type="text" class="form-control" id="email" name="email" placeholder value required
+                   th:value="${nonSensitiveData.email}">
+            <div class="invalid-feedback" th:text="#{label.form.emptyField}"></div>
+            <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="alert alert-danger"
+                 role="alert"></div>
+        </div>
+        <div class="mb-3">
+            <label for="login">Login</label>
+            <input type="text" class="form-control" id="login" name="login" placeholder value required readonly
+                   th:value="${nonSensitiveData.login}">
+            <div class="alert alert-danger" th:if="${userNotFound != null && userNotFound}" th:text="#{message.userNotFound}"></div>
+        </div>
+        <button class="btn btn-primary btn-lg btn-block" type="submit"
+                th:text="#{label.form.submit}"></button>
+    </form>
+    <div style="background-color:#cfd2d6;">
+        <p style="margin:15px;">
+            <button style="margin:15px;" class="btn btn-success" type="button" data-toggle="collapse"
+                    data-target="#collapseExample"
+                    aria-expanded="false" aria-controls="collapseExample" th:text="#{label.form.changePass}">
+            </button>
+        </p>
+        <div class="collapse" id="collapseExample" style="margin: 10px;">
+            <form class="needs-validation" th:object="${sensitiveData}" method="post" action="/user/change_sensitive_data"
+                  enctype="utf8">
+                <div class="mb-3">
+                    <label for="oldPass" th:text="#{label.form.oldPassword}"></label>
+                    <input type="password" class="form-control" id="oldPass" name="oldPassword" placeholder value
+                           required>
+                    <div class="alert alert-danger" th:if="${invalidPass != null && invalidPass}" th:text="#{label.form.invalidPass}"></div>
+                    <div class="invalid-feedback" th:text="#{label.form.emptyField}"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="pass" th:text="#{label.form.newPass}"></label>
+                    <input type="password" class="form-control" id="pass" name="newPassword" placeholder value required>
+                    <div class="invalid-feedback" th:text="#{label.form.emptyField}"></div>
+                    <div th:if="${#fields.hasErrors('newPassword')}" th:errors="*{newPassword}" class="alert alert-danger"
+                         role="alert"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="repeat-pass" th:text="#{label.form.repeatPass}"></label>
+                    <input type="password" class="form-control" id="repeat-pass" name="repeatedPassword" placeholder
+                           value
+                           required>
+                    <div class="invalid-feedback" th:text="#{label.form.emptyField}"></div>
+                    <div th:if="${#fields.hasErrors('global')}" th:errors="*{global}" class="alert alert-danger"
+                         role="alert"></div>
+                </div>
+                <button class="btn btn-primary btn-lg btn-block" type="submit"
+                        th:text="#{label.form.submit}"></button>
+            </form>
+        </div>
+    </div>
+
+</div>
 </body>
 </html>

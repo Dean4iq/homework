@@ -3,8 +3,12 @@ package ua.den.model.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import ua.den.model.dto.NonSensitiveUserData;
+import ua.den.model.dto.SensitiveUserData;
 import ua.den.model.dto.UserDto;
 import ua.den.model.entity.User;
+import ua.den.model.exceprions.PasswordNotMatchingException;
+import ua.den.model.exceprions.UserNotFoundException;
 import ua.den.model.repository.UserRepository;
 
 @Service
@@ -30,6 +34,47 @@ public class UserService {
         user.setEnabled(true);
 
         return userRepository.save(user);
+    }
+
+    public NonSensitiveUserData getNonSensitiveUserDataByLogin(String login) {
+        User user = userRepository.findByLogin(login);
+
+        NonSensitiveUserData userData = new NonSensitiveUserData();
+
+        userData.setLogin(user.getLogin());
+        userData.setEmail(user.getEmail());
+        userData.setName(user.getName());
+        userData.setLastName(user.getLastName());
+        userData.setPatronymicName(user.getPatronymicName());
+
+        return userData;
+    }
+
+    public void updateUserData(NonSensitiveUserData userData) throws UserNotFoundException {
+        User user = userRepository.findByLogin(userData.getLogin());
+
+        if (user == null) {
+            throw new UserNotFoundException(userData.getLogin());
+        }
+
+        user.setEmail(userData.getEmail());
+        user.setLastName(userData.getLastName());
+        user.setName(userData.getName());
+        user.setPatronymicName(userData.getPatronymicName());
+
+        userRepository.save(user);
+    }
+
+    public void updateUserData(SensitiveUserData userData, String login) throws PasswordNotMatchingException {
+        User user = userRepository.findByLogin(login);
+
+        if (encryptPassword(userData.getOldPassword()).equals(user.getPassword())){
+            user.setPassword(userData.getNewPassword());
+
+            userRepository.save(user);
+        } else {
+            throw new PasswordNotMatchingException(login);
+        }
     }
 
     private String encryptPassword(String password) {
