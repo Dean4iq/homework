@@ -1,4 +1,4 @@
-package ua.den.model.entity;
+package ua.den.model.dto;
 
 import ua.den.model.annotations.ValidEnginePower;
 import ua.den.model.annotations.ValidFuelTankCapacity;

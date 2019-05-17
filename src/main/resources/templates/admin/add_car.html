@@ -1,0 +1,69 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
+    <title th:text="#{page.text.search.title}"></title>
+</head>
+<body>
+<div th:insert="parts/menuBar.html :: navbar"></div>
+
+<div style="margin-left: 30px; margin-right: 30px; margin-top:10px;background-color:rgba(255,255,255, 0.95);">
+    <form th:object="${car_details}" method="post" action="/admin/create_new_car" enctype="utf8"
+          style="margin-left:10px; margin-right:10px;">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="model" th:text="#{label.form.model}"></label>
+                <input type="text" class="form-control" id="model" name="model" placeholder value required>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="serialNumber" th:text="#{label.form.serialNumber}"></label>
+                <input type="text" class="form-control" id="serialNumber" name="serialNumber" placeholder value required>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="enginePower" th:text="#{label.form.enginePower}"></label>
+                <input type="text" class="form-control" id="enginePower" name="enginePower" placeholder value>
+                <div th:if="${#fields.hasErrors('enginePower')}" th:errors="*{enginePower}"
+                     class="alert alert-danger" role="alert"></div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="fuelTankCapacity" th:text="#{label.form.fuelTankCapacity}"></label>
+                <input type="text" class="form-control" id="fuelTankCapacity" name="fuelTankCapacity"
+                       placeholder
+                       value>
+                <div th:if="${#fields.hasErrors('fuelTankCapacity')}" th:errors="*{fuelTankCapacity}"
+                     class="alert alert-danger" role="alert"></div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="releaseYear" th:text="#{label.form.releaseYear}"></label>
+                <input type="text" class="form-control" id="releaseYear" name="releaseYear" placeholder value>
+                <div th:if="${#fields.hasErrors('releaseYear')}" th:errors="*{releaseYear}"
+                     class="alert alert-danger" role="alert"></div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="mileage" th:text="#{label.form.mileage}"></label>
+                <input type="text" class="form-control" id="mileage" name="mileage" placeholder value>
+                <div th:if="${#fields.hasErrors('mileage')}" th:errors="*{mileage}" class="alert alert-danger"
+                     role="alert"></div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="amount" th:text="#{label.form.amount}"></label>
+                <input type="text" class="form-control" id="amount" name="amountAvailable" placeholder value>
+                <div th:if="${#fields.hasErrors('amountAvailable')}" th:errors="*{amountAvailable}" class="alert alert-danger"
+                     role="alert"></div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="price" th:text="#{label.form.price}"></label>
+                <input type="text" class="form-control" id="price" name="price" placeholder value>
+                <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="alert alert-danger"
+                     role="alert"></div>
+            </div>
+        </div>
+        <input type="submit" th:value="#{label.form.submit}"/>
+    </form>
+</div>
+</body>
+</html>

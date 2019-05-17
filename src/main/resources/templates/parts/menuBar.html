@@ -8,7 +8,8 @@
     <title th:text="#{page.text.home.head}"></title>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="navbar" style="background-color:#3e8937!important;">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="navbar"
+     style="background-color:#3e8937!important;">
     <a class="navbar-brand" href="/home" th:text="#{menu.link.sitename}">WEB Site</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,10 +19,14 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="/home" th:text="#{menu.link.homepage}"><span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/home" th:text="#{menu.link.homepage}">
+                    <span class="sr-only">(current)</span></a>
             </li>
             <li sec:authorize="hasRole('USER')" class="nav-item active">
-                <a class="nav-link" href="/user/search" th:text="#{menu.link.actionPage}">Search</a>
+                <a class="nav-link" href="/user/search" th:text="#{menu.link.search}">Search</a>
+            </li>
+            <li sec:authorize="hasRole('ADMIN')" class="nav-item active">
+                <a class="nav-link" href="/admin/add_car" th:text="#{menu.link.addCar}">Add new car</a>
             </li>
         </ul>
         <div class="form-inline my-2 my-md-0">
@@ -29,6 +34,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
+                        <img src="/icon/user-icon.png" height="20px"/>
                         <span sec:authentication="name"></span>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="left:auto; right:0;">

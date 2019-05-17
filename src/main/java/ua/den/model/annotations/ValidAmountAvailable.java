@@ -1,6 +1,6 @@
 package ua.den.model.annotations;
 
-import ua.den.model.annotations.validators.EmailValidator;
+import ua.den.model.annotations.validators.AmountAvailableValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -13,9 +13,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Target({TYPE, FIELD, ANNOTATION_TYPE})
 @Retention(RUNTIME)
-@Constraint(validatedBy = EmailValidator.class)
+@Constraint(validatedBy = AmountAvailableValidator.class)
 @Documented
-public @interface ValidEmail {
+public @interface ValidAmountAvailable {
     String message() default "{field.error.amount}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};

@@ -6,54 +6,95 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
 
-    <title th:text="#{page.text.home.head}"></title>
+    <title th:text="#{page.text.search.title}"></title>
+
+    <script>
+        function setListOfSeries(value) {
+            var selectSeries = document.getElementById('serialNumber');
+            selectSeries.disabled = false;
+
+            console.log(value);
+
+            for (var i = 0; i < selectSeries.length; i++) {
+                if (selectSeries.options[i].id == value){
+                    selectSeries.options[i].hidden = false;
+                } else {
+                    selectSeries.options[i].hidden = true;
+                }
+            }
+        }
+    </script>
 </head>
-<body>
+<body style="background-image: url(/image/search_background.jpg);">
 <div th:insert="parts/menuBar.html :: navbar"></div>
 
-<div style="margin-left: 20px; margin-right: 20px; background-color:#cfd2d6;">
-    <p>
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
-                aria-expanded="false" aria-controls="collapseExample">
-            Commit search
-        </button>
-    </p>
-    <div class="collapse" id="collapseExample">
-        <form th:object="${search_details}" method="post" action="/user/search_process" enctype="utf8"
-              style="margin-left:10px; margin-right:10px;">
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="model">Model</label>
-                    <input type="text" class="form-control" id="model" name="model" placeholder value>
+<div style="margin-left: 30px; margin-right: 30px; margin-top:10px;background-color:rgba(255,255,255,0.95); background-repeat: no-repeat;height:90%;">
+    <div style="margin-left: 20px; margin-right: 20px; margin-top:5px; background-color:#cfd2d6;">
+        <p style="margin:15px;">
+            <button style="margin:15px;" class="btn btn-success" type="button" data-toggle="collapse"
+                    data-target="#collapseExample"
+                    aria-expanded="false" aria-controls="collapseExample" th:text="#{label.form.searchForm}">
+            </button>
+        </p>
+        <div class="collapse" id="collapseExample">
+            <form th:object="${search_details}" method="post" action="/user/search_process" enctype="utf8"
+                  style="margin-left:10px; margin-right:10px;">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="model" th:text="#{label.form.model}"></label>
+                        <select class="form-control" name="model" id="model" onChange="javascript:setListOfSeries(this.value);">
+                            <option></option>
+                            <option th:each="carModel: ${modelList}" th:value="${carModel}"
+                                    th:text="${carModel}"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="serialNumber" th:text="#{label.form.serialNumber}"></label>
+                        <select class="form-control" name="serialNumber" id="serialNumber" disabled>
+                            <option></option>
+                            <option th:each="carModel: ${carModelList}" th:id="${carModel.model}" th:value="${carModel.serialNumber}"
+                                    th:text="${carModel.serialNumber}"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="enginePower" th:text="#{label.form.enginePower}"></label>
+                        <input type="text" class="form-control" id="enginePower" name="enginePower" placeholder value>
+                        <div th:if="${#fields.hasErrors('enginePower')}" th:errors="*{enginePower}"
+                             class="alert alert-danger" role="alert"></div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="fuelTankCapacity" th:text="#{label.form.fuelTankCapacity}"></label>
+                        <input type="text" class="form-control" id="fuelTankCapacity" name="fuelTankCapacity"
+                               placeholder
+                               value>
+                        <div th:if="${#fields.hasErrors('fuelTankCapacity')}" th:errors="*{fuelTankCapacity}"
+                             class="alert alert-danger" role="alert"></div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="releaseYear" th:text="#{label.form.releaseYear}"></label>
+                        <input type="text" class="form-control" id="releaseYear" name="releaseYear" placeholder value>
+                        <div th:if="${#fields.hasErrors('releaseYear')}" th:errors="*{releaseYear}"
+                             class="alert alert-danger" role="alert"></div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="mileage" th:text="#{label.form.mileage}"></label>
+                        <input type="text" class="form-control" id="mileage" name="mileage" placeholder value>
+                        <div th:if="${#fields.hasErrors('mileage')}" th:errors="*{mileage}" class="alert alert-danger"
+                             role="alert"></div>
+                    </div>
                 </div>
-                <div class="col-md-6 mb-3">
-                    <label for="serialNumber">serialNumber</label>
-                    <input type="text" class="form-control" id="serialNumber" name="serialNumber" placeholder value>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="enginePower">enginePower</label>
-                    <input type="text" class="form-control" id="enginePower" name="enginePower" placeholder value>
-                    <div th:if="${#fields.hasErrors('enginePower')}" th:errors="*{enginePower}" class="alert alert-danger" role="alert"></div>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="fuelTankCapacity">fuelTankCapacity</label>
-                    <input type="text" class="form-control" id="fuelTankCapacity" name="fuelTankCapacity" placeholder
-                           value>
-                    <div th:if="${#fields.hasErrors('fuelTankCapacity')}" th:errors="*{fuelTankCapacity}" class="alert alert-danger" role="alert"></div>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="releaseYear">releaseYear</label>
-                    <input type="text" class="form-control" id="releaseYear" name="releaseYear" placeholder value>
-                    <div th:if="${#fields.hasErrors('releaseYear')}" th:errors="*{releaseYear}" class="alert alert-danger" role="alert"></div>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="mileage">mileage</label>
-                    <input type="text" class="form-control" id="mileage" name="mileage" placeholder value>
-                    <div th:if="${#fields.hasErrors('mileage')}" th:errors="*{mileage}" class="alert alert-danger" role="alert"></div>
-                </div>
-            </div>
-            <input type="submit" value="Submit"/>
-        </form>
+                <input type="submit" th:value="#{label.form.search}"/>
+            </form>
+        </div>
+    </div>
+    <div th:if="${carList == null && submitted}">
+        <div class="alert alert-danger" role="alert" th:text="#{message.noItemFound}"></div>
+    </div>
+    <div th:if="${carList == null && !submitted}">
+        <div class="alert alert-primary" role="alert" th:text="#{message.pickUpForm}"></div>
+    </div>
+    <div th:if="${carList != null}">
+        List
     </div>
 </div>
 </body>
