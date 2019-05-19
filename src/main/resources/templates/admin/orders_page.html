@@ -1,0 +1,40 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
+    <title th:text="#{page.text.orders.title}"></title>
+</head>
+<body>
+<div th:insert="parts/menuBar.html :: navbar"></div>
+
+<div class="container">
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">№</th>
+            <th scope="col" th:text="#{label.form.orderDate}"></th>
+            <th scope="col" th:text="#{label.form.user}"></th>
+            <th scope="col" th:text="#{label.form.car}"></th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orders}">
+            <form action="/admin/consider_order" method="post">
+                <input type="hidden" name="order_id" value="${order.id}"/>
+                <th scope="row" th:text="${order.id}"></th>
+                <td th:text="${order.orderDate}"></td>
+                <td th:text="${order.user.login}"></td>
+                <td th:text="${order.car.carModel.model + ' ' + order.car.carModel.serialNumber}"></td>
+                <td><input type="submit" th:value="#{label.form.consider}"/></td>
+            </form>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

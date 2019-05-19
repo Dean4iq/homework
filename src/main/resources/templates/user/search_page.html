@@ -46,6 +46,7 @@
                 selectSeries.disabled = false;
             }
         }
+
     </script>
 </head>
 <body style="background-image: url(/image/search_background.jpg);">
@@ -65,7 +66,8 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="model" th:text="#{label.form.model}"></label>
-                        <select class="form-control" name="model" id="model" onChange="javascript:setListOfSeries(this.value);">
+                        <select class="form-control" name="model" id="model"
+                                onChange="javascript:setListOfSeries(this.value);">
                             <option></option>
                             <option th:each="carModel: ${modelList}" th:value="${carModel}"
                                     th:text="${carModel}"></option>
@@ -76,7 +78,8 @@
                         <select class="form-control" name="serialNumber" id="serialNumber" disabled>
                             <option id="unselectedModel" th:text="#{message.selectModel}"></option>
                             <option id="emptySelect"></option>
-                            <option th:each="carModel: ${carModelList}" th:id="${carModel.model}" th:value="${carModel.serialNumber}"
+                            <option th:each="carModel: ${carModelList}" th:id="${carModel.model}"
+                                    th:value="${carModel.serialNumber}"
                                     th:text="${carModel.serialNumber}"></option>
                         </select>
                     </div>
@@ -111,14 +114,46 @@
             </form>
         </div>
     </div>
-    <div th:if="${carList == null && submitted}">
+    <div th:if="${(carList == null || carList.empty) && submitted}">
         <div class="alert alert-danger" role="alert" th:text="#{message.noItemFound}"></div>
     </div>
     <div th:if="${carList == null && !submitted}">
         <div class="alert alert-primary" role="alert" th:text="#{message.pickUpForm}"></div>
     </div>
-    <div th:if="${carList != null}">
-        List
+    <div th:if="${carList != null && !carList.empty}">
+        <table class="table">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">Model</th>
+                <th scope="col">Engine</th>
+                <th scope="col">Fuel tank</th>
+                <th scope="col">Release year</th>
+                <th scope="col">Mileage</th>
+                <th scope="col">Price</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="car : ${carList}">
+                <th scope="row" th:text="${car.carModel.model + ' ' + car.carModel.serialNumber}"></th>
+                <td th:text="${car.enginePower}"></td>
+                <td th:text="${car.fuelTankCapacity}"></td>
+                <td th:text="${car.releaseYear}"></td>
+                <td th:text="${car.mileage}"></td>
+                <td th:text="${car.price}"></td>
+                <td>
+                    <form th:if="${car.amountAvailable != 0}" action="/user/order" method="post">
+                        <input type="hidden" name="car_id" value="${car.id}"/>
+                        <button type="submit" class="btn btn-info" th:text="#{label.form.orderCar}"></button>
+                    </form>
+                    <form th:if="${car.amountAvailable == 0}" action="/user/subscribe" method="post">
+                        <input type="hidden" name="car_id" value="${car.id}"/>
+                        <button type="submit" class="btn btn-warning" th:text="#{label.form.subscribe}"></button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 </body>

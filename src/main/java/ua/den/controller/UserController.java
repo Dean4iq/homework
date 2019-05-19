@@ -4,16 +4,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.den.model.dto.NonSensitiveUserData;
 import ua.den.model.dto.SearchParam;
 import ua.den.model.dto.SensitiveUserData;
 import ua.den.model.dto.UserDto;
+import ua.den.model.entity.Car;
+import ua.den.model.entity.Subscription;
 import ua.den.model.exceprions.PasswordNotMatchingException;
 import ua.den.model.exceprions.UserNotFoundException;
 import ua.den.model.service.CarModelService;
 import ua.den.model.service.CarService;
+import ua.den.model.service.SubscriptionService;
 import ua.den.model.service.UserService;
 
 import javax.validation.Valid;
@@ -28,6 +33,8 @@ public class UserController {
     private CarModelService carModelService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private SubscriptionService subscriptionService;
 
     @RequestMapping("settings")
     public ModelAndView getSettingsPage(Principal principal) {
@@ -95,9 +102,46 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView("user/search_page");
         modelAndView.addObject("submitted", true);
 
+        modelAndView.addObject("carList", carService.getDefinedCarList(searchParam));
+
         preparePredefinedFields(modelAndView);
 
         return modelAndView;
+    }
+
+    @RequestMapping("subscribe")
+    public ModelAndView subscribeToCar(@RequestAttribute("car_id") Car car,
+                                       Principal principal) {
+        Subscription subscription = new Subscription();
+
+        subscription.setCar(car);
+        subscription.setUser(userService.retrieveUserData(principal.getName()));
+
+        subscriptionService.addNewSubscription(subscription);
+
+        return new ModelAndView("redirect:/user/subscriptions");
+    }
+
+    @RequestMapping("subscriptions")
+    public ModelAndView subscribtionsPageForUser(Principal principal) {
+        ModelAndView modelAndView = new ModelAndView("user/subscription_page");
+
+        modelAndView.addObject("subscriptions",
+                subscriptionService.getSubscriptionsByUser(principal.getName()));
+
+        return modelAndView;
+    }
+
+    @RequestMapping("remove_subscription")
+    public ModelAndView removeSubscriptionFromUser(@RequestAttribute("subscription_id") Subscription subscription) {
+        subscriptionService.removeSubscription(subscription);
+
+        ModelAndView modelAndView = new ModelAndView("redirect:/user/subscriptions");
+
+        modelAndView.addObject("unsubscribeSuccess", true);
+
+        return modelAndView;
+
     }
 
     private void addObjectsToSettingsPage(ModelAndView modelAndView, Principal principal) {

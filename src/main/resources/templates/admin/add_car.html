@@ -11,6 +11,9 @@
 <body>
 <div th:insert="parts/menuBar.html :: navbar"></div>
 
+<div class="alert alert-success" th:if="${successAdd}" th:text="#{message.successProcess}"></div>
+<div class="alert alert-danger" th:if="${errorAdd}" th:text="#{message.errorProcess}"></div>
+
 <div style="margin-left: 30px; margin-right: 30px; margin-top:10px;background-color:rgba(255,255,255, 0.95);">
     <form th:object="${car_details}" method="post" action="/admin/create_new_car" enctype="utf8"
           style="margin-left:10px; margin-right:10px;">

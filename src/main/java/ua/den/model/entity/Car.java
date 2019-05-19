@@ -1,5 +1,8 @@
 package ua.den.model.entity;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -17,8 +20,8 @@ public class Car {
     private Integer mileage;
     private Integer price;
 
-    @ManyToOne
-    @JoinColumn(name = "model_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "model_id", nullable = false)
     private CarModel carModel;
 
     public Car() {

@@ -18,6 +18,10 @@ public class UserService {
 
     private static final BCryptPasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder(11);
 
+    public User retrieveUserData(String login) {
+        return userRepository.findByLogin(login);
+    }
+
     public User registerNewUser(UserDto userDto){
         User user = new User();
 
