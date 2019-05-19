@@ -1,10 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
+    <title th:text="#{page.text.subscriptions.title}"></title>
 </head>
 <body>
+<div th:insert="parts/menuBar.html :: navbar"></div>
 
+<div class="alert alert-success" th:if="${unsubscribeSuccess}" th:text="#{message.successProcess}"></div>
+<div th:if="${subscriptions == null || subscriptions.empty}" class="alert alert-danger"
+     th:text="#{message.noSubscriptions}"></div>
+
+<div th:if="${subscriptions != null && !subscriptions.empty}">
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col" th:text="#{label.form.car}"></th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="subscr : ${subscriptions}">
+            <th scope="row" th:text="${subscr.car.carModel.model + ' ' + subscr.car.carModel.serialnumber}"></th>
+            <td>
+                <form method="post" action="/user/remove_subscription">
+                    <input type="hidden" name="subscription_id" value="${subscr.id}"/>
+                    <button type="submit" class="btn btn-secondary" th:value="#{label.form.unsubscribe}"></button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

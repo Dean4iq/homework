@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
-    List<Order> findAllByStatusOrderByOrderDateAsc(boolean status);
+    List<Order> findAllByStatusOrderOrderByOrderDateAsc(boolean status);
+    List<Order> findAllByUserLoginOrderByOrderDateAsc(String login);
 }

@@ -16,10 +16,7 @@ import ua.den.model.entity.Car;
 import ua.den.model.entity.Subscription;
 import ua.den.model.exceprions.PasswordNotMatchingException;
 import ua.den.model.exceprions.UserNotFoundException;
-import ua.den.model.service.CarModelService;
-import ua.den.model.service.CarService;
-import ua.den.model.service.SubscriptionService;
-import ua.den.model.service.UserService;
+import ua.den.model.service.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -35,6 +32,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private SubscriptionService subscriptionService;
+    @Autowired
+    private OrderService orderService;
 
     @RequestMapping("settings")
     public ModelAndView getSettingsPage(Principal principal) {
@@ -141,7 +140,15 @@ public class UserController {
         modelAndView.addObject("unsubscribeSuccess", true);
 
         return modelAndView;
+    }
 
+    @RequestMapping("orders")
+    public ModelAndView getOrdersPage(Principal principal) {
+        ModelAndView modelAndView = new ModelAndView("user/orders_page");
+
+        modelAndView.addObject("orderList", orderService.getOrdersListForUser(principal.getName()));
+
+        return modelAndView;
     }
 
     private void addObjectsToSettingsPage(ModelAndView modelAndView, Principal principal) {
