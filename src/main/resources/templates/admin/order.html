@@ -1,10 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
+    <title th:text="#{page.text.orders.title}"></title>
 </head>
 <body>
+<div th:insert="parts/menuBar.html :: navbar"></div>
 
+<div class="alert alert-success" th:if="${cancelSuccess}" th:text="#{message.successProcess}"></div>
+
+<div th:if="${order == null}" class="alert alert-danger"
+     th:text="#{message.ordersNotFound}"></div>
+
+<div th:if="${order != null}">
+    <ul class="list-group">
+        <li class="list-group-item" th:text="#{label.form.user}"><span class="badge" th:text="${order.user.login + ' - ' + order.user.lastName + ' ' + order.user.name + ' ' + order.user.patronymicName}"></span></li>
+        <li class="list-group-item" th:text="#{label.form.car}"><span class="badge" th:text="${order.car.carModel.model + ' ' + order.car.carModel.serialNumber}"></span></li>
+        <li class="list-group-item" th:text="#{label.form.enginePower}"><span class="badge" th:text="${order.car.enginePower}"></span></li>
+        <li class="list-group-item" th:text="#{label.form.fuelTankCapacity}"><span class="badge" th:text="${order.car.fuelTankCapacity}"></span></li>
+        <li class="list-group-item" th:text="#{label.form.releaseYear}"><span class="badge" th:text="${order.car.releaseYear}"></span></li>
+        <li class="list-group-item" th:text="#{label.form.mileage}"><span class="badge" th:text="${order.car.mileage}"></span></li>
+        <li class="list-group-item" th:text="#{label.form.orderDate}"><span class="badge" th:text="${order.car.orderDate}"></span></li>
+        <li class="list-group-item" th:text="#{label.form.price}"><span class="badge" th:text="${order.car.price}"></span></li>
+        <li class="list-group-item" th:text="#{label.form.amount}"><span class="badge" th:text="${order.car.amount}"></span></li>
+        <li class="list-group-item" th:text="#{label.form.status}"><span class="badge" th:text="${order.car.status}"></span></li>
+    </ul>
+    <form method="post" action="/admin/make_order_decision_accept">
+        <input type="hidden" name="order_id" value="${order.id}"/>
+        <button type="submit" name="decision" value="#{label.form.accept}"></button>
+    </form>
+    <form method="post" action="/admin/make_order_decision_decline">
+        <input type="hidden" name="order_id" value="${order.id}"/>
+        <button type="submit" name="decision" value="#{label.form.decline}"></button>
+    </form>
+</div>
 </body>
 </html>

@@ -151,6 +151,17 @@ public class UserController {
         return modelAndView;
     }
 
+    @RequestMapping("cancel_order")
+    public ModelAndView cancelUserOrder(@RequestParam("order_id") Long orderId) {
+        ModelAndView modelAndView = new ModelAndView("redirect:/user/orders_page");
+
+        orderService.deleteOrder(orderId);
+
+        modelAndView.addObject("cancelSuccess", true);
+
+        return modelAndView;
+    }
+
     private void addObjectsToSettingsPage(ModelAndView modelAndView, Principal principal) {
         modelAndView.addObject("nonSensitiveData", userService.getNonSensitiveUserDataByLogin(principal.getName()));
         modelAndView.addObject("sensitiveData", new SensitiveUserData());

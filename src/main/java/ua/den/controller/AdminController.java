@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.den.model.dto.CarParams;
+import ua.den.model.entity.Car;
 import ua.den.model.entity.Order;
 import ua.den.model.service.CarService;
+import ua.den.model.service.EmailFormService;
 import ua.den.model.service.OrderService;
 
 import javax.validation.Valid;
@@ -38,8 +40,10 @@ public class AdminController {
         ModelAndView modelAndView = new ModelAndView("admin/add_car");
 
         try {
-            carService.addNewCar(carParams);
+            Car savedCar = carService.addNewCar(carParams);
             modelAndView.addObject("successAdd", true);
+
+            new EmailFormService().sendNotificationForCar(savedCar);
         } catch (Exception e) {
             modelAndView.addObject("errorAdd", true);
         }
@@ -61,6 +65,30 @@ public class AdminController {
         ModelAndView modelAndView = new ModelAndView("admin/order");
 
         modelAndView.addObject("order", order);
+
+        return modelAndView;
+    }
+
+    @RequestMapping("make_order_decision_accept")
+    public ModelAndView decideOrderAccept(@RequestParam("order_id") Order order) {
+        ModelAndView modelAndView = new ModelAndView("redirect:/admin/orders");
+
+        order.setStatus(true);
+        orderService.updateOrder(order);
+
+        modelAndView.addObject("operationSuccess", true);
+
+        return modelAndView;
+    }
+
+    @RequestMapping("make_order_decision_decline")
+    public ModelAndView decideOrderDecline(@RequestParam("order_id") Order order) {
+        ModelAndView modelAndView = new ModelAndView("redirect:/admin/orders");
+
+        order.setStatus(false);
+        orderService.updateOrder(order);
+
+        modelAndView.addObject("operationSuccess", true);
 
         return modelAndView;
     }

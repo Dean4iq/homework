@@ -11,7 +11,11 @@
 <body>
 <div th:insert="parts/menuBar.html :: navbar"></div>
 
-<div class="container">
+<div th:if="${operationSuccess}" class="alert alert-success" th:text="#{message.successProcess}"></div>
+<div th:if="${orderList == null || orderList.empty}" class="alert alert-danger"
+     th:text="#{message.ordersNotFound}"></div>
+
+<div class="container" th:if="${orderList != null && !orderList.empty}">
     <table class="table">
         <thead class="thead-light">
         <tr>

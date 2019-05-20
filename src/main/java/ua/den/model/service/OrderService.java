@@ -13,7 +13,7 @@ public class OrderService {
     private OrderRepository orderRepository;
 
     public List<Order> getListOfUnresolvedOrders() {
-        return orderRepository.findAllByStatusOrderOrderByOrderDateAsc(false);
+        return orderRepository.findAllByStatusOrderByOrderDateAsc(false);
     }
 
     public List<Order> getOrdersListForUser(String login) {
@@ -26,5 +26,9 @@ public class OrderService {
 
     public void updateOrder(Order order) {
         orderRepository.save(order);
+    }
+
+    public void deleteOrder(Long orderId) {
+        orderRepository.deleteById(orderId);
     }
 }

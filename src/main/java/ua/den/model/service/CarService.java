@@ -16,7 +16,7 @@ public class CarService {
     @Autowired
     private CarRepository carRepository;
 
-    public void addNewCar(CarParams carParams) {
+    public Car addNewCar(CarParams carParams) {
         Car car = new Car.Builder()
                 .enginePower(carParams.getEnginePower())
                 .fuelTankCapacity(carParams.getFuelTankCapacity())
@@ -33,7 +33,7 @@ public class CarService {
 
         car.setCarModel(carModel);
 
-        carRepository.save(car);
+        return carRepository.save(car);
     }
 
     public List<Car> getDefinedCarList(SearchParam searchParam) {

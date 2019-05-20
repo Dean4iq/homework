@@ -28,9 +28,9 @@
         <tr th:each="subscr : ${subscriptions}">
             <th scope="row" th:text="${subscr.car.carModel.model + ' ' + subscr.car.carModel.serialnumber}"></th>
             <td>
-                <form method="post" action="/user/remove_subscription">
+                <form method="post" action="/user/cancel_order">
                     <input type="hidden" name="subscription_id" value="${subscr.id}"/>
-                    <button type="submit" class="btn btn-secondary" th:value="#{label.form.unsubscribe}"></button>
+                    <button type="submit" class="btn btn-secondary" th:value="#{label.form.cancelOrder}"></button>
                 </form>
             </td>
         </tr>
