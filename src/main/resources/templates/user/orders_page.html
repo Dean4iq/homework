@@ -13,7 +13,7 @@
 <div th:insert="parts/menuBar.html :: navbar"></div>
 
 <div class="alert alert-success" th:if="${cancelSuccess}" th:text="#{message.successProcess}"></div>
-<div class="alert alert-success" th:if="${orderedSuccess}" th:text="#{message.successProcess}"></div>
+<div class="alert alert-success" th:if="${#httpServletRequest.getParameter('orderedSuccess')}" th:text="#{message.successProcess}"></div>
 
 <div th:if="${orderList == null || orderList.empty}" class="alert alert-danger"
      th:text="#{message.ordersNotFound}"></div>

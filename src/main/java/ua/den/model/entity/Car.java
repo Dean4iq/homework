@@ -17,7 +17,7 @@ public class Car {
     private Integer mileage;
     private Integer price;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "model_id", nullable = false)
     private CarModel carModel;
 

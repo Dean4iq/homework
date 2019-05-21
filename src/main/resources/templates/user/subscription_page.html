@@ -12,7 +12,7 @@
 <body>
 <div th:insert="parts/menuBar.html :: navbar"></div>
 
-<div class="alert alert-success" th:if="${unsubscribeSuccess}" th:text="#{message.successProcess}"></div>
+<div class="alert alert-success" th:if="${#httpServletRequest.getParameter('unsubscribeSuccess')}" th:text="#{message.successProcess}"></div>
 <div th:if="${subscriptions == null || subscriptions.empty}" class="alert alert-danger"
      th:text="#{message.noSubscriptions}"></div>
 
@@ -28,8 +28,8 @@
         <tr th:each="subscr : ${subscriptions}">
             <th scope="row" th:text="${subscr.car.carModel.model + ' ' + subscr.car.carModel.serialNumber}"></th>
             <td>
-                <form method="post" action="/user/cancel_order">
-                    <input type="hidden" name="subscription_id" value="${subscr.id}"/>
+                <form method="post" action="/user/remove_subscription">
+                    <input type="hidden" name="subscription_id" th:value="${subscr.id}"/>
                     <button type="submit" class="btn btn-secondary" th:text="#{label.form.cancelOrder}"></button>
                 </form>
             </td>

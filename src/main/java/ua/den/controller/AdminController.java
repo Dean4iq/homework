@@ -48,7 +48,7 @@ public class AdminController {
             Car savedCar = carService.addNewCar(carParams);
             modelAndView.addObject("successAdd", true);
 
-            emailFormService.sendNotificationForCar(savedCar);
+            //emailFormService.sendNotificationForCar(savedCar);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             modelAndView.addObject("errorAdd", true);
