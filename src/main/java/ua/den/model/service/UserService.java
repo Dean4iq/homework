@@ -7,8 +7,8 @@ import ua.den.model.dto.NonSensitiveUserData;
 import ua.den.model.dto.SensitiveUserData;
 import ua.den.model.dto.UserDto;
 import ua.den.model.entity.User;
-import ua.den.model.exceprions.PasswordNotMatchingException;
-import ua.den.model.exceprions.UserNotFoundException;
+import ua.den.model.exceptions.PasswordNotMatchingException;
+import ua.den.model.exceptions.UserNotFoundException;
 import ua.den.model.repository.UserRepository;
 
 @Service

@@ -13,9 +13,9 @@ import ua.den.model.dto.SensitiveUserData;
 import ua.den.model.entity.Car;
 import ua.den.model.entity.Order;
 import ua.den.model.entity.Subscription;
-import ua.den.model.exceprions.PasswordNotMatchingException;
-import ua.den.model.exceprions.RowAlreadyExistsException;
-import ua.den.model.exceprions.UserNotFoundException;
+import ua.den.model.exceptions.PasswordNotMatchingException;
+import ua.den.model.exceptions.RowAlreadyExistsException;
+import ua.den.model.exceptions.UserNotFoundException;
 import ua.den.model.service.*;
 
 import javax.validation.Valid;

@@ -1,4 +1,4 @@
-package ua.den.model.exceprions;
+package ua.den.model.exceptions;
 
 import com.sun.javaws.exceptions.InvalidArgumentException;
 

@@ -3,7 +3,7 @@ package ua.den.model.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.den.model.entity.Subscription;
-import ua.den.model.exceprions.RowAlreadyExistsException;
+import ua.den.model.exceptions.RowAlreadyExistsException;
 import ua.den.model.repository.SubscriptionRepository;
 
 import java.util.List;
