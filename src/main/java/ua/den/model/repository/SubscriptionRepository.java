@@ -6,6 +6,6 @@ import ua.den.model.entity.Subscription;
 import java.util.List;
 
 public interface SubscriptionRepository extends JpaRepository<Subscription, Long> {
-    List<Subscription> findAllByCarId(Long carId);
+    List<Subscription> findByCarId(Long carId);
     List<Subscription> findAllByUserLogin(String login);
 }

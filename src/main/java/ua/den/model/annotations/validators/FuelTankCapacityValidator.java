@@ -12,6 +12,6 @@ public class FuelTankCapacityValidator implements ConstraintValidator<ValidFuelT
 
     @Override
     public boolean isValid(Integer capacity, ConstraintValidatorContext constraintValidatorContext) {
-        return capacity == null || capacity > 0;
+        return capacity == null || capacity >= 0;
     }
 }

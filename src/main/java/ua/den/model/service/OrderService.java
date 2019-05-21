@@ -13,7 +13,7 @@ public class OrderService {
     private OrderRepository orderRepository;
 
     public List<Order> getListOfUnresolvedOrders() {
-        return orderRepository.findAllByStatusOrderByOrderDateAsc(false);
+        return orderRepository.findByStatusOrderByOrderDateAsc((byte) 0);
     }
 
     public List<Order> getOrdersListForUser(String login) {

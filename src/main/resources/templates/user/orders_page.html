@@ -13,6 +13,7 @@
 <div th:insert="parts/menuBar.html :: navbar"></div>
 
 <div class="alert alert-success" th:if="${cancelSuccess}" th:text="#{message.successProcess}"></div>
+<div class="alert alert-success" th:if="${orderedSuccess}" th:text="#{message.successProcess}"></div>
 
 <div th:if="${orderList == null || orderList.empty}" class="alert alert-danger"
      th:text="#{message.ordersNotFound}"></div>
@@ -35,19 +36,23 @@
         </thead>
         <tbody>
         <tr th:each="order : ${orderList}">
-            <th scope="row" th:text="${order.car.carModel.model + ' ' + order.car.carModel.serialnumber}"></th>
+            <th scope="row" th:text="${order.car.carModel.model + ' ' + order.car.carModel.serialNumber}"></th>
             <td th:text="${order.car.enginePower}"></td>
             <td th:text="${order.car.fuelTankCapacity}"></td>
             <td th:text="${order.car.releaseYear}"></td>
             <td th:text="${order.car.mileage}"></td>
-            <td th:text="${order.car.orderDate}"></td>
-            <td th:text="${order.car.price}"></td>
-            <td th:text="${order.car.purchasingDate}"></td>
-            <td th:text="${order.car.status}"></td>
+            <td th:text="${#dates.format(order.orderDate,'HH:mm dd-MM-yyyy')}"></td>
+            <td th:text="${order.price}"></td>
+            <td th:text="${#dates.format(order.purchasingDate,'HH:mm dd-MM-yyyy')}"></td>
             <td>
-                <form method="post" action="/user/delete_order">
-                    <input type="hidden" name="subscription_id" value="${order.id}"/>
-                    <button type="submit" class="btn btn-secondary" th:value="#{label.form.unsubscribe}"></button>
+                <div th:if="${order.status} == 0" th:text="#{message.avaits}"></div>
+                <div th:if="${order.status} == 1" th:text="#{message.accepted}"></div>
+                <div th:if="${order.status} == 2" th:text="#{message.declined}"></div>
+            </td>
+            <td>
+                <form method="post" action="/user/cancel_order">
+                    <input type="hidden" name="order_id" th:value="${order.id}"/>
+                    <button type="submit" class="btn btn-secondary" th:text="#{label.form.cancelOrder}"></button>
                 </form>
             </td>
         </tr>

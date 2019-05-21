@@ -19,7 +19,7 @@ public class EmailFormService {
     private SubscriptionService subscriptionService;
 
     public void sendNotificationForCar(Car car) {
-        List<Subscription> subscriptions = subscriptionService.getSubscriporsByCarId(car.getId());
+        List<Subscription> subscriptions = subscriptionService.getSubscribersByCarId(car.getId());
 
         List<User> userList = subscriptions.stream().map(Subscription::getUser).collect(Collectors.toList());
         String subject = car.getCarModel().getModel() + ' ' + car.getCarModel().getSerialNumber();

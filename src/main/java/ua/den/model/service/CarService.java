@@ -6,6 +6,7 @@ import ua.den.model.dto.CarParams;
 import ua.den.model.dto.SearchParam;
 import ua.den.model.entity.Car;
 import ua.den.model.entity.CarModel;
+import ua.den.model.repository.CarModelRepository;
 import ua.den.model.repository.CarRepository;
 
 import java.util.List;
@@ -15,6 +16,13 @@ import java.util.stream.Collectors;
 public class CarService {
     @Autowired
     private CarRepository carRepository;
+
+    @Autowired
+    private CarModelRepository carModelRepository;
+
+    public Car getCarById(Long carId) {
+        return carRepository.getOne(carId);
+    }
 
     public Car addNewCar(CarParams carParams) {
         Car car = new Car.Builder()
@@ -33,13 +41,37 @@ public class CarService {
 
         car.setCarModel(carModel);
 
-        return carRepository.save(car);
+        return carRepository.save(checkCarInRepository(car));
+    }
+
+    private Car checkCarInRepository(Car car) {
+        List<Car> cars = carRepository.findAll();
+        List<CarModel> carModel =
+                carModelRepository.findByModelAndSerialNumber(car.getCarModel().getModel(),
+                        car.getCarModel().getSerialNumber());
+
+        cars = cars.stream().filter(car::equalsForBasic)
+                .collect(Collectors.toList());
+
+        if (cars.isEmpty()) {
+            car.setId(null);
+            car.getCarModel().setId(null);
+        } else {
+            Car carInRepo = cars.get(0);
+
+            car.setId(carInRepo.getId());
+            car.setAmountAvailable(car.getAmountAvailable() + carInRepo.getAmountAvailable());
+        }
+
+        if (carModel != null && !carModel.isEmpty()) {
+            car.getCarModel().setId(carModel.get(0).getId());
+        }
+
+        return car;
     }
 
     public List<Car> getDefinedCarList(SearchParam searchParam) {
         List<Car> cars = carRepository.findAll();
-
-        System.out.println(searchParam);
 
         if (carListIsNotEmpty(cars) && searchParam.getEnginePower() != null) {
             cars = cars.stream()

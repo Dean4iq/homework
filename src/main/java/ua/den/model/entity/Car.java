@@ -147,6 +147,17 @@ public class Car {
         this.carModel = carModel;
     }
 
+    public boolean equalsForBasic(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Car car = (Car) o;
+        return getEnginePower().equals(car.getEnginePower()) &&
+                getFuelTankCapacity().equals(car.getFuelTankCapacity()) &&
+                getReleaseYear().equals(car.getReleaseYear()) &&
+                getMileage().equals(car.getMileage()) &&
+                getPrice().equals(car.getPrice());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

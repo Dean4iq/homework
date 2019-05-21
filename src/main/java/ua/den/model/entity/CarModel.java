@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name="car_model")
+@Table(name = "car_model")
 public class CarModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +35,14 @@ public class CarModel {
 
     public void setSerialNumber(String serialNumber) {
         this.serialNumber = serialNumber;
+    }
+
+    public boolean equalsForBasic(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CarModel carModel = (CarModel) o;
+        return getModel().equals(carModel.getModel()) &&
+                getSerialNumber().equals(carModel.getSerialNumber());
     }
 
     @Override

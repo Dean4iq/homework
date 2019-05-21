@@ -12,10 +12,10 @@
 <div th:insert="parts/menuBar.html :: navbar"></div>
 
 <div th:if="${operationSuccess}" class="alert alert-success" th:text="#{message.successProcess}"></div>
-<div th:if="${orderList == null || orderList.empty}" class="alert alert-danger"
+<div th:if="${orders == null || orders.empty}" class="alert alert-danger"
      th:text="#{message.ordersNotFound}"></div>
 
-<div class="container" th:if="${orderList != null && !orderList.empty}">
+<div class="container" th:if="${orders != null && !orders.empty}">
     <table class="table">
         <thead class="thead-light">
         <tr>
@@ -29,7 +29,7 @@
         <tbody>
         <tr th:each="order : ${orders}">
             <form action="/admin/consider_order" method="post">
-                <input type="hidden" name="order_id" value="${order.id}"/>
+                <input type="hidden" name="order_id" th:value="${order.id}"/>
                 <th scope="row" th:text="${order.id}"></th>
                 <td th:text="${order.orderDate}"></td>
                 <td th:text="${order.user.login}"></td>

@@ -4,22 +4,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.den.model.dto.NonSensitiveUserData;
 import ua.den.model.dto.SearchParam;
 import ua.den.model.dto.SensitiveUserData;
-import ua.den.model.dto.UserDto;
 import ua.den.model.entity.Car;
+import ua.den.model.entity.Order;
 import ua.den.model.entity.Subscription;
 import ua.den.model.exceprions.PasswordNotMatchingException;
+import ua.den.model.exceprions.RowAlreadyExistsException;
 import ua.den.model.exceprions.UserNotFoundException;
 import ua.den.model.service.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.sql.Timestamp;
+import java.util.Date;
 
 @Controller
 @RequestMapping("user")
@@ -108,15 +110,42 @@ public class UserController {
         return modelAndView;
     }
 
+    @RequestMapping("order")
+    public ModelAndView getOrdersPage(@RequestParam("car_id") Car car, Principal principal) {
+        ModelAndView modelAndView = new ModelAndView("redirect:/user/orders");
+
+        Order order = new Order();
+        order.setCar(car);
+        order.setStatus((byte) 0);
+        order.setOrderDate(new Timestamp(new Date().getTime()));
+        order.setPrice(car.getPrice());
+        order.setUser(userService.retrieveUserData(principal.getName()));
+
+        orderService.addNewOrder(order);
+
+        modelAndView.addObject("orderedSuccess", true);
+
+        return modelAndView;
+    }
+
     @RequestMapping("subscribe")
-    public ModelAndView subscribeToCar(@RequestAttribute("car_id") Car car,
+    public ModelAndView subscribeToCar(@RequestParam("car_id") Car car,
                                        Principal principal) {
         Subscription subscription = new Subscription();
 
         subscription.setCar(car);
         subscription.setUser(userService.retrieveUserData(principal.getName()));
 
-        subscriptionService.addNewSubscription(subscription);
+
+        try {
+            subscriptionService.addNewSubscription(subscription);
+        } catch (RowAlreadyExistsException e) {
+            ModelAndView modelAndView = new ModelAndView("redirect:/user/search");
+
+            modelAndView.addObject("subscriptionExists", true);
+
+            return modelAndView;
+        }
 
         return new ModelAndView("redirect:/user/subscriptions");
     }
@@ -132,7 +161,7 @@ public class UserController {
     }
 
     @RequestMapping("remove_subscription")
-    public ModelAndView removeSubscriptionFromUser(@RequestAttribute("subscription_id") Subscription subscription) {
+    public ModelAndView removeSubscriptionFromUser(@RequestParam("subscription_id") Subscription subscription) {
         subscriptionService.removeSubscription(subscription);
 
         ModelAndView modelAndView = new ModelAndView("redirect:/user/subscriptions");
@@ -153,7 +182,7 @@ public class UserController {
 
     @RequestMapping("cancel_order")
     public ModelAndView cancelUserOrder(@RequestParam("order_id") Long orderId) {
-        ModelAndView modelAndView = new ModelAndView("redirect:/user/orders_page");
+        ModelAndView modelAndView = new ModelAndView("redirect:/user/orders");
 
         orderService.deleteOrder(orderId);
 

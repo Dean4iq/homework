@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface CarModelRepository extends JpaRepository<CarModel, Long> {
     List<CarModel> findAll();
+    List<CarModel> findByModelAndSerialNumber(String model, String serialNumber);
 }

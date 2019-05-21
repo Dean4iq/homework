@@ -15,6 +15,8 @@ import ua.den.model.service.EmailFormService;
 import ua.den.model.service.OrderService;
 
 import javax.validation.Valid;
+import java.sql.Timestamp;
+import java.util.Date;
 
 @Controller
 @RequestMapping("admin")
@@ -24,6 +26,9 @@ public class AdminController {
 
     @Autowired
     private CarService carService;
+
+    @Autowired
+    private EmailFormService emailFormService;
 
     @RequestMapping("add_car")
     public ModelAndView getFormToAdd() {
@@ -43,8 +48,9 @@ public class AdminController {
             Car savedCar = carService.addNewCar(carParams);
             modelAndView.addObject("successAdd", true);
 
-            new EmailFormService().sendNotificationForCar(savedCar);
+            emailFormService.sendNotificationForCar(savedCar);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             modelAndView.addObject("errorAdd", true);
         }
 
@@ -73,8 +79,12 @@ public class AdminController {
     public ModelAndView decideOrderAccept(@RequestParam("order_id") Order order) {
         ModelAndView modelAndView = new ModelAndView("redirect:/admin/orders");
 
-        order.setStatus(true);
+        order.setStatus((byte) 1);
+        order.setPurchasingDate(new Timestamp(new Date().getTime()));
+
         orderService.updateOrder(order);
+
+        order.getCar().setAmountAvailable(order.getCar().getAmountAvailable() - 1);
 
         modelAndView.addObject("operationSuccess", true);
 
@@ -85,7 +95,9 @@ public class AdminController {
     public ModelAndView decideOrderDecline(@RequestParam("order_id") Order order) {
         ModelAndView modelAndView = new ModelAndView("redirect:/admin/orders");
 
-        order.setStatus(false);
+        order.setStatus((byte) 2);
+        order.setPurchasingDate(new Timestamp(new Date().getTime()));
+
         orderService.updateOrder(order);
 
         modelAndView.addObject("operationSuccess", true);

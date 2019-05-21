@@ -18,25 +18,63 @@
      th:text="#{message.ordersNotFound}"></div>
 
 <div th:if="${order != null}">
-    <ul class="list-group">
-        <li class="list-group-item" th:text="#{label.form.user}"><span class="badge" th:text="${order.user.login + ' - ' + order.user.lastName + ' ' + order.user.name + ' ' + order.user.patronymicName}"></span></li>
-        <li class="list-group-item" th:text="#{label.form.car}"><span class="badge" th:text="${order.car.carModel.model + ' ' + order.car.carModel.serialNumber}"></span></li>
-        <li class="list-group-item" th:text="#{label.form.enginePower}"><span class="badge" th:text="${order.car.enginePower}"></span></li>
-        <li class="list-group-item" th:text="#{label.form.fuelTankCapacity}"><span class="badge" th:text="${order.car.fuelTankCapacity}"></span></li>
-        <li class="list-group-item" th:text="#{label.form.releaseYear}"><span class="badge" th:text="${order.car.releaseYear}"></span></li>
-        <li class="list-group-item" th:text="#{label.form.mileage}"><span class="badge" th:text="${order.car.mileage}"></span></li>
-        <li class="list-group-item" th:text="#{label.form.orderDate}"><span class="badge" th:text="${order.car.orderDate}"></span></li>
-        <li class="list-group-item" th:text="#{label.form.price}"><span class="badge" th:text="${order.car.price}"></span></li>
-        <li class="list-group-item" th:text="#{label.form.amount}"><span class="badge" th:text="${order.car.amount}"></span></li>
-        <li class="list-group-item" th:text="#{label.form.status}"><span class="badge" th:text="${order.car.status}"></span></li>
-    </ul>
+    <table class="table">
+        <tr>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <td th:text="#{label.form.user}"></td>
+            <td th:text="${order.user.login + ' - ' + order.user.lastName + ' ' + order.user.name + ' ' + order.user.patronymicName}"></td>
+        </tr>
+        <tr>
+            <td th:text="#{label.form.car}"></td>
+            <td th:text="${order.car.carModel.model + ' ' + order.car.carModel.serialNumber}"></td>
+        </tr>
+        <tr>
+            <td th:text="#{label.form.enginePower}"></td>
+            <td th:text="${order.car.enginePower}"></td>
+        </tr>
+        <tr>
+            <td th:text="#{label.form.fuelTankCapacity}"></td>
+            <td th:text="${order.car.fuelTankCapacity}"></td>
+        </tr>
+        <tr>
+            <td th:text="#{label.form.releaseYear}"></td>
+            <td th:text="${order.car.releaseYear}"></td>
+        </tr>
+        <tr>
+            <td th:text="#{label.form.mileage}"></td>
+            <td th:text="${order.car.mileage}"></td>
+        </tr>
+        <tr>
+            <td th:text="#{label.form.orderDate}"></td>
+            <td th:text="${#dates.format(order.orderDate,'HH:mm dd-MM-yyyy')}"></td>
+        </tr>
+        <tr>
+            <td th:text="#{label.form.price}"></td>
+            <td th:text="${order.price}"></td>
+        </tr>
+        <tr>
+            <td th:text="#{label.form.amount}"></td>
+            <td th:text="${order.car.amountAvailable}"></td>
+        </tr>
+        <tr>
+            <td th:text="#{label.form.status}"></td>
+            <td>
+                <div th:if="${order.status} == 0" th:text="#{message.avaits}"></div>
+                <div th:if="${order.status} == 1" th:text="#{message.accepted}"></div>
+                <div th:if="${order.status} == 2" th:text="#{message.declined}"></div>
+            </td>
+        </tr>
+    </table>
     <form method="post" action="/admin/make_order_decision_accept">
-        <input type="hidden" name="order_id" value="${order.id}"/>
-        <button type="submit" name="decision" value="#{label.form.accept}"></button>
+        <input type="hidden" name="order_id" th:value="${order.id}"/>
+        <button type="submit" name="decision" th:text="#{label.form.accept}"></button>
     </form>
     <form method="post" action="/admin/make_order_decision_decline">
-        <input type="hidden" name="order_id" value="${order.id}"/>
-        <button type="submit" name="decision" value="#{label.form.decline}"></button>
+        <input type="hidden" name="order_id" th:value="${order.id}"/>
+        <button type="submit" name="decision" th:text="#{label.form.decline}"></button>
     </form>
 </div>
 </body>

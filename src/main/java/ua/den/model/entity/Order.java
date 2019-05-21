@@ -21,7 +21,7 @@ public class Order {
     private Integer price;
     private Timestamp orderDate;
     private Timestamp purchasingDate;
-    private Boolean status;
+    private Byte status;
 
     public Long getId() {
         return id;
@@ -71,11 +71,11 @@ public class Order {
         this.purchasingDate = purchasingDate;
     }
 
-    public Boolean getStatus() {
+    public Byte getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(Byte status) {
         this.status = status;
     }
 

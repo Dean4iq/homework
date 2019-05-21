@@ -48,6 +48,8 @@
         }
 
 
+
+
     </script>
 </head>
 <body style="background-image: url(/image/search_background.jpg);">
@@ -115,12 +117,15 @@
             </form>
         </div>
     </div>
-    <div th:if="${(carList == null || carList.empty) && submitted}">
-        <div class="alert alert-danger" role="alert" th:text="#{message.noItemFound}"></div>
-    </div>
-    <div th:if="${carList == null && !submitted}">
-        <div class="alert alert-primary" role="alert" th:text="#{message.pickUpForm}"></div>
-    </div>
+    <div th:if="${(carList == null || carList.empty) && submitted}" class="alert alert-danger" role="alert"
+         th:text="#{message.noItemFound}"></div>
+
+    <div th:if="${carList == null && !submitted}" class="alert alert-primary" role="alert"
+         th:text="#{message.pickUpForm}"></div>
+
+    <div th:if="${#httpServletRequest.getParameter('subscriptionExists')}" class="alert alert-danger" role="alert"
+         th:text="#{message.alreadySubscribed}"></div>
+
     <div th:if="${carList != null && !carList.empty}">
         <table class="table">
             <thead class="thead-light">
@@ -144,11 +149,11 @@
                 <td th:text="${car.price}"></td>
                 <td>
                     <form th:if="${car.amountAvailable != 0}" action="/user/order" method="post">
-                        <input type="hidden" name="car_id" value="${car.id}"/>
+                        <input type="hidden" name="car_id" th:value="${car.id}"/>
                         <button type="submit" class="btn btn-info" th:text="#{label.form.orderCar}"></button>
                     </form>
                     <form th:if="${car.amountAvailable == 0}" action="/user/subscribe" method="post">
-                        <input type="hidden" name="car_id" value="${car.id}"/>
+                        <input type="hidden" name="car_id" th:value="${car.id}"/>
                         <button type="submit" class="btn btn-warning" th:text="#{label.form.subscribe}"></button>
                     </form>
                 </td>
